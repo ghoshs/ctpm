@@ -31,13 +31,17 @@ try:
     PATH_TO_CHROMADB: str = '/share/pi/nigam/mwornow/pmct/data/chroma'
 except ImportError as e:
     # PATH_TO_CHROMADB: str = '/Users/mwornow/Dropbox/Stanford/Shah Lab/Papers/pmct/data/chroma'
-    PATH_TO_CHROMADB: str = '/Users/michaelwornow/Desktop/pmct/data/chroma'
+    # PATH_TO_CHROMADB: str = '/Users/michaelwornow/Desktop/pmct/data/chroma'
+    PATH_TO_CHROMADB: str = '/Users/ghoshs/Documents/Uniklikum_Tubingen/Postdoc/clinical_trial_patient_matching/data/chroma'
     pass # ignore
 import tiktoken
 
 SYSTEM_PROMPT = "You are an expert clinical research coordinator tasked with assessing whether a patient meets the eligibility criteria of a clinical trial based on their clinical notes."
+N_BOOTSTRAP_SAMPLES = 2 ##TODO: update this!!
 
 model_2_tokens = {
+    'gpt-4-1106-preview': 32_000, # cost 5$ for 5 patients
+    'gpt-4o-mini': 32_000,
     'GPT4-32k' : 32_000,
     'GPT4-32k-2' : 32_000,
     'shc-gpt-35-turbo-16k' : 16_000,
@@ -128,7 +132,7 @@ def calc_metrics(true_labels: np.ndarray, preds: np.ndarray) -> Tuple[Dict[str, 
         # is the correct "Micro-F1" metric to use.
         # `n2c2_f1 = sklearn.metrics.f1_score(df['true_label'], df['is_met'], average='macro')`
         'n2c2-micro-f1' : n2c2_f1,
-    }, bootstrap_ranges, bootstraps
+    }###, bootstrap_ranges, bootstraps
 
 def get_relevant_docs_for_criteria(dataloader: XMLDataLoader,
                                    collection: chromadb.Collection, 

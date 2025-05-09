@@ -284,6 +284,7 @@ if __name__ == '__main__':
     exclude_confidences: List[str] = args.exclude_confidences.split(",") if args.exclude_confidences else []
     is_default_to_class_prevalence: bool = args.is_default_to_class_prevalence
     split = 'train' if 'train' in file_name else 'test'
-    path_to_data: str = './data/train/' if split == 'train' else './data/n2c2-t1_gold_standard_test_data/test/'
+    # path_to_data: str = './data/train/' if split == 'train' else './data/n2c2-t1_gold_standard_test_data/test/'
+    path_to_data: str = './data/test_pipeline/'
 
     gen_metrics(file_name, path_to_data, exclude_confidences=exclude_confidences, is_default_to_class_prevalence=is_default_to_class_prevalence)

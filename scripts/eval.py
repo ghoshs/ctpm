@@ -55,7 +55,8 @@ if __name__ == '__main__':
     args = parse_args()
     llm_model: str = args.llm_model
     embed_model: str = args.embed_model
-    path_to_data: str = './data/train/' if args.split == 'train' else './data/n2c2-t1_gold_standard_test_data/test/'
+    # path_to_data: str = './data/train/' if args.split == 'train' else './data/n2c2-t1_gold_standard_test_data/test/'
+    path_to_data: str = './data/train/' if args.split == 'train' else './data/test_pipeline/'
     n_chunks: Optional[int] = args.n_chunks
     threshold: Optional[float] = args.threshold
     is_chunk_keep_full_note: bool = args.is_chunk_keep_full_note
@@ -166,8 +167,8 @@ if __name__ == '__main__':
     print(f"Result Saved at {file_name}")
 
     # Calculate overall token usage
-    completion_tokens: int = sum([ stat.completion_tokens for stat in stats ])
-    prompt_tokens: int = sum([ stat.prompt_tokens for stat in stats ])
+    completion_tokens: int = sum([ stat.completion_tokens for stat in stats if stat is not None])
+    prompt_tokens: int = sum([ stat.prompt_tokens for stat in stats if stat is not None])
     # Calculate cost
     cost_per_1k_completion_tokens: float = 0.0
     cost_per_1k_prompt_tokens: float = 0.0
